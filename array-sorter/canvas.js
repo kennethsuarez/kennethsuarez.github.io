@@ -3,44 +3,93 @@ window.addEventListener('load', () => {
 	const ctx = canvas.getContext("2d");
 
 	// resizing
-	canvas.height = window.innerHeight;
+	canvas.height = window.innerHeight / 2;
 	canvas.width = window.innerWidth;
 
-	ctx.fillRect(50, 50, 200, 200);
-	ctx.strokeStyle = "red";
-	ctx.lineWidth = 5;
-	ctx.strokeRect(100, 100, 200, 200);
+	function randInt(min,max) {
+		return min + Math.floor((max - min) * Math.random());
+	} 
 
-	// variables
-	let painting = false;
-
-	function startPosition(e) {
-		painting = true;
-		draw(e);
-
-	}
-	function finishedPosition() {
-		painting = false;
-		ctx.beginPath();
-	}
-	function draw(e) {
-		if(!painting) return;
-		ctx.strokeStyle = "black";
-		ctx.lineWidth = 5;
-		ctx.lineCap = "round";
-
-		ctx.lineTo(e.clientX, e.clientY);
-		ctx.stroke();
-		ctx.beginPath();
-		ctx.moveTo(e.clientX, e.clientY);
+	// draw
+	function draw(arr) {
+		//clear canvas before
+		ctx.clearRect(0, 0, canvas.width, canvas.height); 
+		var currX = 50;
+		var width = 30;
+		var arr_size = arr.length;
+		for (var i = 0; i < arr_size; i++) {
+			height = arr[i].height;
+			ctx.fillStyle = arr[i].color;
+			ctx.fillRect(currX, canvas.height - height, width, height);
+			currX += width + 10;
+		}
 	}
 
-	//EvenListener
-	canvas.addEventListener('mousedown', startPosition);
-	canvas.addEventListener('mouseup', finishedPosition);
-	canvas.addEventListener('mousemove', draw);
+	// generate array from slider input
+	var slider = document.getElementById("arraySize");
+	var arr = [];
+		// display array from initial value
+		for (var i = 0; i < slider.value; i++) {
+			arr.push({
+				height: randInt(10,200),
+				color: "#b3f2ff"
+			});
+		}
+		draw(arr);
+
+	// animation
+	function AnimatedArray(arr, canvas) {
+		this._arr = arr;
+		this._canvas = canvas;
+		var arr_size = arr.length;
+		var _this = this;
+		this._id = setInterval(function() {_this._step();}, 1000);
+
+	}
+
+	AnimatedArray.prototype._step = function() {
+		this._arr = [];
+		for (var i = 0; i < 10; i++) {
+			this._arr.push({
+				height: randInt(10,200),
+				color: "#b3f2ff"
+			});
+		}
+		draw(this._arr);
+	};
+	// modify array based using slider
+	slider.oninput = function() {
+		// generate new array
+		arr = [];
+		for (let i = 0; i < this.value; i++) {
+			arr.push({
+				height: randInt(10,200),
+				color: "#b3f2ff"
+			});
+		}
+		// bubbleSort(arr);
+		// display on canvas
+		var aa = new AnimatedArray(arr, canvas);
+		bubbleSort(aa);
+	 	//draw(arr);
+	}
+
 });
 
-window.addEventListener('resize', () => {
 
-});
+function bubbleSort(aa) {
+	let n = arr.length;
+	for (let i = 0; i < n; i++) {
+		for (let j = 0; j < n - i - 1; j++) {
+				if (arr[j+1].height < arr[j].height) {
+				var swap = arr[j].height;
+				arr[j].height = arr[j+1].height;
+					arr[j+1].height = swap;
+			}
+		}
+	}	
+}
+
+function beginSort() {
+	
+}
