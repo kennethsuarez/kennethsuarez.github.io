@@ -7,23 +7,23 @@
 		<meta charset = "UTF-8" />
 		<!-- css design -->
 		<link rel = "stylesheet" href = "array-sorter/style.css" />
-
-		
-		
 	</head>
 
 	<body>
 		<!-- drawing canvas -->
 		<canvas id = "canvas"></canvas>
 
-		<!-- slider -->
+		<!-- array size slider -->
 		<div class="slidecontainer">
 		 	<input type="range" min="5" max="25" value="10" class="slider" id="arraySize">
 		</div>
 
-		<button onclick = "BeginSort()" class = "button button1"> Start </button>
+		<!-- speed slider -->
+		<div class="slidecontainer">
+		 	<input type="range" min="10" max="1000" value="300" class="slider" id="sortSpeed">
+		</div>
 
-		<button onclick = "StopSort()" class = "button button1"> Stop </button>
+		<button id="start" class="button"> Start </button>
 
 		<!-- javascript for visualization of code -->
 		<script src = "array-sorter/canvas.js"></script>

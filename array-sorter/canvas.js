@@ -32,10 +32,10 @@ function draw(arr) {
 }
 
 // generate array from slider input
-var slider = document.getElementById("arraySize");
+var slider1 = document.getElementById("arraySize");
 
 	// display array from initial value
-	for (var i = 0; i < slider.value; i++) {
+	for (var i = 0; i < slider1.value; i++) {
 		arr.push({
 			height: randInt(10,200),
 			color: "#b3f2ff"
@@ -44,7 +44,7 @@ var slider = document.getElementById("arraySize");
 	draw(arr);
 
 // modify array based using slider
-slider.oninput = function() {
+slider1.oninput = function() {
 	if (currentlySorting) {
 		return;
 	} 
@@ -59,6 +59,13 @@ slider.oninput = function() {
  	draw(arr);
 }
 
+// set speed using slider
+var slider2 = document.getElementById("sortSpeed");
+var interval = slider2.value;
+slider2.oninput = function() {
+	interval = this.value;
+}
+
 // function for visualizing array 
 function Animate(arr) {
 	this._arr = arr;
@@ -71,14 +78,19 @@ function Animate(arr) {
 	var _this = this;
 	this.id = setInterval(() => {
 		_this.step();
-	}, 100);
+	}, interval);
 }
+
 Animate.prototype.step = function() {
 	if (this.actions.length == 0) {
 		draw(this._arr); 
+		startButton.disabled = false;
+		currentlySorting = false;
+		clearInterval(this.id);
 		return;
 	}
-
+	console.log(interval);
+	currentlySorting = true;
 	var action = this.actions.shift();
 	var i = action[1];
 	var j = action[2];
@@ -118,23 +130,17 @@ Animate.prototype.swap = function(i, j) {
 Animate.prototype.cancel = function() {
 	clearInterval(this.id);
 }
-// event when start button is clicked
-var visualArr = null;
-function BeginSort() {
-	// create an instance of visualizer
-	visualArr = new Animate(arr);
-	// delay in animation will allow program to 
-	// process the steps necessary in sorting
-	insertionSort(visualArr);
-}
 
-// event when stop button is clicked
-function StopSort() {
-	if (visualArr != null) {
-		visualArr.cancel();
-	}
-	currentlySorting = false;
-}
+// event when start button is clicked
+
+var startButton = document.getElementById("start");
+var visualArr = null;
+startButton.disabled = false;
+startButton.addEventListener('click', function(event) {
+	this.disabled = true;
+	visualArr = new Animate(arr);
+	bubbleSort(visualArr);
+});
 
 // the following are sorting algorithms 
 // running the sorting algorithms will
