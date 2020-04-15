@@ -1,8 +1,15 @@
+// setup canvas
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-// resize canvas
 canvas.height = window.innerHeight / 2;
 canvas.width = window.innerWidth;
+
+// change canvas when window resize
+window.addEventListener('resize', () => {
+	canvas.height = window.innerHeight / 2;
+	canvas.width = window.innerWidth;
+	draw(arr);
+});
 
 // main variables used in program
 var aa = null;
@@ -19,7 +26,8 @@ function randInt(min,max) {
 // draw
 function draw(arr) {
 	//clear canvas before
-	ctx.clearRect(0, 0, canvas.width, canvas.height); 
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 	var currX = 50;
 	var width = 30;
 	var arr_size = arr.length;
@@ -89,7 +97,6 @@ Animate.prototype.step = function() {
 		clearInterval(this.id);
 		return;
 	}
-	console.log(interval);
 	currentlySorting = true;
 	var action = this.actions.shift();
 	var i = action[1];
@@ -136,15 +143,30 @@ Animate.prototype.cancel = function() {
 var startButton = document.getElementById("start");
 var visualArr = null;
 startButton.disabled = false;
+
 startButton.addEventListener('click', function(event) {
 	this.disabled = true;
 	visualArr = new Animate(arr);
-	bubbleSort(visualArr);
+	getAlgo[algo](visualArr);
 });
 
 // the following are sorting algorithms 
 // running the sorting algorithms will
 // generate the step by step needed
+
+var getAlgo = {
+	'Bubble Sort': bubbleSort,
+	'Insertion Sort': insertionSort,
+	'Cocktail Sort': CocktailSort
+}
+
+var cs = document.getElementById("chooseSort");
+var algo = "Bubble Sort";
+cs.onchange = function(){
+	algo = cs.options[cs.selectedIndex].text;
+	console.log(algo);
+};
+
 function bubbleSort(visualArr) {
 	let n = visualArr._arr.length;
 	for (let i = 0; i < n; i++) {
@@ -155,7 +177,6 @@ function bubbleSort(visualArr) {
 		}
 	}	
 }
-// 0 1 2 3 4 5
 
 function insertionSort(visualArr) {
 	var n = visualArr._arr.length;
@@ -167,3 +188,52 @@ function insertionSort(visualArr) {
 		}
 	}
 }
+
+function CocktailSort(visualArr) { 
+    var swapped = true; 
+    var start = 0; 
+    var end = visualArr._arr.length - 1; 
+  
+    while (swapped) { 
+        // reset the swapped flag on entering 
+        // the loop, because it might be true from 
+        // a previous iteration. 
+        swapped = false; 
+  
+        // loop from left to right same as 
+        // the bubble sort 
+        for (var i = start; i < end; ++i) { 
+            if (visualArr.greaterThan(i, i+1)) { 
+                visualArr.swap(i, i+1); 
+                swapped = true; 
+            } 
+        } 
+  
+        // if nothing moved, then array is sorted. 
+        if (!swapped) 
+            break; 
+  
+        // otherwise, reset the swapped flag so that it 
+        // can be used in the next stage 
+        swapped = false; 
+  
+        // move the end point back by one, because 
+        // item at the end is in its rightful spot 
+        end -= 1; 
+  
+        // from right to left, doing the 
+        // same comparison as in the previous stage 
+        for (var i = end - 1; i >= start; --i) { 
+            if (visualArr.greaterThan(i, i+1)) { 
+                visualArr.swap(i, i+1)
+                swapped = true; 
+            } 
+        } 
+  
+        // increase the starting point, because 
+        // the last stage would have moved the next 
+        // smallest number to its rightful spot. 
+        start += 1; 
+    } 
+} 
+

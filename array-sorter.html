@@ -14,16 +14,27 @@
 		<canvas id = "canvas"></canvas>
 
 		<!-- array size slider -->
+		<p> Array Size </p>
 		<div class="slidecontainer">
 		 	<input type="range" min="5" max="25" value="10" class="slider" id="arraySize">
 		</div>
 
 		<!-- speed slider -->
 		<div class="slidecontainer">
-		 	<input type="range" min="10" max="1000" value="300" class="slider" id="sortSpeed">
+		 	<input type="range" min="10" max="1000" value="100" class="slider" id="sortSpeed">
 		</div>
 
 		<button id="start" class="button"> Start </button>
+		<!-- select sorting algorithm -->
+		<div class="box">
+		 	<select id = "chooseSort">
+			    <option>Bubble Sort</option>
+			    <option>Insertion Sort</option>
+			    <option>Cocktail Sort</option>
+			    <option>Option 4</option>
+			    <option>Option 5</option>
+		  	</select>
+		</div>
 
 		<!-- javascript for visualization of code -->
 		<script src = "array-sorter/canvas.js"></script>

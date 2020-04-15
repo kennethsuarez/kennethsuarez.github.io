@@ -1,3 +1,10 @@
+
+/* 
+SliderCSS
+ButtonCSS 
+SelectCSS
+*/
+
 * {
 	margin: 0;
 	padding: 0;
@@ -11,11 +18,11 @@
   width: 50%; /* Width of the outside container */5
 }
 
-/* The slider itself */
+/* SliderCSS */
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
-  width: 100%; /* Full-width */
+  width: 50%; /* Full-width */
   height: 25px; /* Specified height */
   background: #474747; /* Grey background */
   outline: none; /* Remove outline */
@@ -45,6 +52,10 @@
   background: #4CAF50; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+/* SliderCSS */
+
+
+/* Button CSS */
 .button {
   background-color: #4CAF50; /* Green */
   border: none;
@@ -63,3 +74,52 @@
   background-color: #102310;
   color: #999999;
 }
+/* Button CSS */
+
+p {
+	display: inline;
+}
+
+/* SelectCSS */
+.box {
+
+  display: inline-block;
+}
+
+.box select {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  width: 200px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.box::before {
+  font-family: FontAwesome;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  padding: 30px;
+}
+/* SelectCSS */
